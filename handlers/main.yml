@@ -1,0 +1,22 @@
+---
+# Handler to handle common notifications. Handlers are called by other plays.
+# See https://docs.ansible.com/ansible/2.5/user_guide/playbooks_reuse_roles.html#role-dependencies
+# on how to include handlers from multiple roles.
+#
+# meta/main.yml:
+# dependencies:
+#   - { role: mit.nginx-handlers }
+
+- name: nginx configtest
+  command: /etc/init.d/nginx configtest
+  register: nginx_configtest
+  listen: "Reload nginx"
+
+- name: Reload nginx
+  service: name=nginx state=reloaded
+  when: nginx_configtest
+  listen: "Reload nginx"
+
+- name: Restart nginx
+  service: name=nginx state=restarted
+
