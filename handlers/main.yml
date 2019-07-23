@@ -7,6 +7,16 @@
 # dependencies:
 #   - { role: mit.nginx-handlers }
 
+- name: apache configtest
+  command: apache2ctl configtest
+  register: apache_configtest
+  listen: "Reload apache"
+
+- name: Reload apache
+  service: name=apache2 state=reloaded
+  when: apache_configtest
+  listen: "Reload apache"
+
 - name: nginx configtest
   command: /etc/init.d/nginx configtest
   register: nginx_configtest
