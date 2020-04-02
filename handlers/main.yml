@@ -14,7 +14,7 @@
 
 - name: Reload apache
   service: name=apache2 state=reloaded
-  when: apache_configtest
+  when: apache_configtest.rc == 0
   listen: "Reload apache"
 
 - name: nginx configtest
@@ -24,9 +24,19 @@
 
 - name: Reload nginx
   service: name=nginx state=reloaded
-  when: nginx_configtest
+  when: nginx_configtest.rc == 0
   listen: "Reload nginx"
 
 - name: Restart nginx
   service: name=nginx state=restarted
+
+- name: php7.3-fpm configtest
+  command: php-fpm7.3 --test
+  register: php73_fpm_configtest
+  listen: "Reload php7.3-fpm"
+
+- name: Reload php7.3-fpm
+  service: name=php7.3-fpm state=reloaded
+  when: php73_fpm_configtest.rc == 0
+  listen: "Reload php7.3-fpm"
 
