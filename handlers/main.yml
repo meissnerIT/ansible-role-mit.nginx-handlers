@@ -30,6 +30,16 @@
 - name: Restart nginx
   service: name=nginx state=restarted
 
+- name: php7.0-fpm configtest
+  command: php-fpm7.0 --test
+  register: php70_fpm_configtest
+  listen: "Reload php7.0-fpm"
+
+- name: Reload php7.0-fpm
+  service: name=php7.0-fpm state=reloaded
+  when: php70_fpm_configtest.rc == 0
+  listen: "Reload php7.0-fpm"
+
 - name: php7.3-fpm configtest
   command: php-fpm7.3 --test
   register: php73_fpm_configtest
