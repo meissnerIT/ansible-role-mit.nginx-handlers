@@ -50,3 +50,13 @@
   when: php73_fpm_configtest.rc == 0
   listen: "Reload php7.3-fpm"
 
+- name: php7.4-fpm configtest
+  command: php-fpm7.4 --test
+  register: php74_fpm_configtest
+  listen: "Reload php7.4-fpm"
+
+- name: Reload php7.4-fpm
+  service: name=php7.4-fpm state=reloaded
+  when: php74_fpm_configtest.rc == 0
+  listen: "Reload php7.4-fpm"
+
