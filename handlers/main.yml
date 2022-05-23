@@ -63,7 +63,7 @@
 - name: php8.0-fpm configtest
   command: php-fpm8.0 --test
   register: php80_fpm_configtest
-  listen: "Reload php7.4-fpm"
+  listen: "Reload php8.0-fpm"
 
 - name: Reload php8.0-fpm
   service: name=php8.0-fpm state=reloaded
