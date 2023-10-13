@@ -80,3 +80,13 @@
   when: php81_fpm_configtest.rc == 0
   listen: "Reload php8.1-fpm"
 
+- name: php8.2-fpm configtest
+  command: php-fpm8.2 --test
+  register: php82_fpm_configtest
+  listen: Reload php8.2-fpm
+
+- name: Reload php8.2-fpm
+  service: name=php8.2-fpm state=reloaded
+  when: php82_fpm_configtest.rc == 0
+  listen: Reload php8.1-fpm
+
