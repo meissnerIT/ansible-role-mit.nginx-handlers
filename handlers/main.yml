@@ -7,86 +7,110 @@
 # dependencies:
 #   - { role: mit.nginx-handlers }
 
-- name: apache configtest
-  command: apache2ctl configtest
+- name: Apache configtest
+  ansible.builtin.command: apache2ctl configtest
   register: apache_configtest
-  listen: "Reload apache"
+  listen: Reload apache
+  changed_when: false
 
 - name: Reload apache
-  service: name=apache2 state=reloaded
+  ansible.builtin.service:
+    name: apache2
+    state: reloaded
   when: apache_configtest.rc == 0
-  listen: "Reload apache"
+  listen: Reload apache
 
-- name: nginx configtest
-  command: /etc/init.d/nginx configtest
+- name: Nginx configtest
+  ansible.builtin.command: nginx -t
   register: nginx_configtest
-  listen: "Reload nginx"
+  listen: Reload nginx
+  changed_when: false
 
 - name: Reload nginx
-  service: name=nginx state=reloaded
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
   when: nginx_configtest.rc == 0
-  listen: "Reload nginx"
+  listen: Reload nginx
 
 - name: Restart nginx
-  service: name=nginx state=restarted
-
-- name: php7.0-fpm configtest
-  command: php-fpm7.0 --test
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+- name: Php7.0-fpm configtest
+  ansible.builtin.command: php-fpm7.0 --test
   register: php70_fpm_configtest
-  listen: "Reload php7.0-fpm"
+  listen: Reload php7.0-fpm
+  changed_when: false
 
 - name: Reload php7.0-fpm
-  service: name=php7.0-fpm state=reloaded
+  ansible.builtin.service:
+    name: php7.0-fpm
+    state: reloaded
   when: php70_fpm_configtest.rc == 0
-  listen: "Reload php7.0-fpm"
+  listen: Reload php7.0-fpm
 
-- name: php7.3-fpm configtest
-  command: php-fpm7.3 --test
+- name: Php7.3-fpm configtest
+  ansible.builtin.command: php-fpm7.3 --test
   register: php73_fpm_configtest
-  listen: "Reload php7.3-fpm"
+  listen: Reload php7.3-fpm
+  changed_when: false
 
 - name: Reload php7.3-fpm
-  service: name=php7.3-fpm state=reloaded
+  ansible.builtin.service:
+    name: php7.3-fpm
+    state: reloaded
   when: php73_fpm_configtest.rc == 0
-  listen: "Reload php7.3-fpm"
+  listen: Reload php7.3-fpm
 
-- name: php7.4-fpm configtest
-  command: php-fpm7.4 --test
+- name: Php7.4-fpm configtest
+  ansible.builtin.command: php-fpm7.4 --test
   register: php74_fpm_configtest
-  listen: "Reload php7.4-fpm"
+  listen: Reload php7.4-fpm
+  changed_when: false
 
 - name: Reload php7.4-fpm
-  service: name=php7.4-fpm state=reloaded
+  ansible.builtin.service:
+    name: php7.4-fpm
+    state: reloaded
   when: php74_fpm_configtest.rc == 0
-  listen: "Reload php7.4-fpm"
+  listen: Reload php7.4-fpm
 
-- name: php8.0-fpm configtest
-  command: php-fpm8.0 --test
+- name: Php8.0-fpm configtest
+  ansible.builtin.command: php-fpm8.0 --test
   register: php80_fpm_configtest
-  listen: "Reload php8.0-fpm"
+  listen: Reload php8.0-fpm
+  changed_when: false
 
 - name: Reload php8.0-fpm
-  service: name=php8.0-fpm state=reloaded
+  ansible.builtin.service:
+    name: php8.0-fpm
+    state: reloaded
   when: php80_fpm_configtest.rc == 0
-  listen: "Reload php8.0-fpm"
+  listen: Reload php8.0-fpm
 
-- name: php8.1-fpm configtest
-  command: php-fpm8.1 --test
+- name: Php8.1-fpm configtest
+  ansible.builtin.command: php-fpm8.1 --test
   register: php81_fpm_configtest
-  listen: "Reload php8.1-fpm"
+  listen: Reload php8.1-fpm
+  changed_when: false
 
 - name: Reload php8.1-fpm
-  service: name=php8.1-fpm state=reloaded
+  ansible.builtin.service:
+    name: php8.1-fpm
+    state: reloaded
   when: php81_fpm_configtest.rc == 0
-  listen: "Reload php8.1-fpm"
+  listen: Reload php8.1-fpm
 
-- name: php8.2-fpm configtest
-  command: php-fpm8.2 --test
+- name: Php8.2-fpm configtest
+  ansible.builtin.command: php-fpm8.2 --test
   register: php82_fpm_configtest
-  listen: "Reload php8.2-fpm"
+  listen: Reload php8.2-fpm
+  changed_when: false
 
 - name: Reload php8.2-fpm
-  service: name=php8.2-fpm state=reloaded
+  ansible.builtin.service:
+    name: php8.2-fpm
+    state: reloaded
   when: php82_fpm_configtest.rc == 0
-  listen: "Reload php8.2-fpm"
-
+  listen: Reload php8.2-fpm
