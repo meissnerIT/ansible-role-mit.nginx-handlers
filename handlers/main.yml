@@ -114,3 +114,16 @@
     state: reloaded
   when: php82_fpm_configtest.rc == 0
   listen: Reload php8.2-fpm
+
+- name: Php8.4-fpm configtest
+  ansible.builtin.command: php-fpm8.4 --test
+  register: php84_fpm_configtest
+  listen: Reload php8.4-fpm
+  changed_when: false
+
+- name: Reload php8.4-fpm
+  ansible.builtin.service:
+    name: php8.4-fpm
+    state: reloaded
+  when: php84_fpm_configtest.rc == 0
+  listen: Reload php8.4-fpm
